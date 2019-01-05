@@ -8,6 +8,8 @@ library(httr)
 
 querydates <- seq(as.Date("2017/6/30"), as.Date("2017/12/31"), by = "day")
 
+apodbaseurl <- c("https://api.nasa.gov/planetary/apod?")
+apodkey <- c("&api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
 v <- GET("https://api.nasa.gov/planetary/apod?api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
 w <- curl(url = "https://api.nasa.gov/planetary/apod?api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
 s <- GET("https://api.nasa.gov/planetary/apod?date=2012-12-19&api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
