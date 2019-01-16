@@ -15,7 +15,7 @@ library(jsonlite)
 library(rtweet)
 library(rtweet)
 apikey <- c("jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
-queryseq <- seq(as.Date("2017/6/30"), as.Date("2017/12/31"), by = "day")
+queryseq <- seq(as.Date("2017/1/1"), as.Date("2017/12/31"), by = "day")
 querydates <- seq(as.Date("2017/6/30"), as.Date("2017/12/31"), by = "day")
 querydate <- paste0("date=",chardates[1])
 chardates <- as.character(querydates)
@@ -39,13 +39,7 @@ for (i in seq_along(dummydates)) {
 }
 
 
-#Create token
-token <- create_token(
-  app = "GreatestAPODs",
-  consumer_key = "japcb18LtppGNSW2yWA24C894",
-  consumer_secret = "JmOZOQFQ6jEhpzG4IHSd2Ddf8XBGMNVUxZnlJsWIoX9mAe7f9N",
-  access_token = "9551451262-wK2EmA942kxZYIwa5LMKZoQA4Xc2uyIiEwu2YXL",
-  access_secret = "9vpiSGKg1fIPQtxc5d5ESiFlZQpfbknEN1f1m2xe5byw7")
+
 
 # Get info about the APOD twitter account
 apodtwitter <- lookup_users("apod")
