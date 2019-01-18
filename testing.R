@@ -13,50 +13,43 @@ library(httr)
 library(tm)
 library(jsonlite)
 library(rtweet)
-library(rtweet)
-apikey <- c("jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
+gets_df <- readRDS("nasadata.RDS")
+
 queryseq <- seq(as.Date("2017/1/1"), as.Date("2017/12/31"), by = "day")
-querydates <- seq(as.Date("2017/6/30"), as.Date("2017/12/31"), by = "day")
-querydate <- paste0("date=",chardates[1])
-chardates <- as.character(querydates)
 # for loop to iterate on looper function
-# apod <- modify_url("https://api.nasa.gov/planetary/apod", query = querydate, params = "test")
 dummydates <- seq(as.Date("2017/6/30"), as.Date("2017/7/03"), by = "day")
 
 gets_df <- data.frame(Date=as.Date(character()),
-                 Explanation=character(), 
+                 Explanation=character(),
+                 Title=character(),
+                 nasaurl=character(),
                  Retweets=character(),
                  Likes=character(),
                  stringsAsFactors=FALSE)
 # names(gets_df) <- c()
-for (i in seq_along(dummydates)) {
-  apod <- paste0("https://api.nasa.gov/planetary/apod?date=", dummydates[i],"&api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
+for (i in 1: length(queryseq)) {
+  print(i)
+  print(queryseq[i])
+  apod <- paste0("https://api.nasa.gov/planetary/apod?date=", queryseq[i],apodapikey)
   iterget <- GET(apod)
+  Sys.sleep(0.5)
   decode <- fromJSON(as.character(iterget), simplifyDataFrame = TRUE)
   gets_df[i,'Date'] <- c(decode$date)
   gets_df[i,'Explanation'] <- c(decode$explanation)
-  #gets_df$date <- append(gets_df, decode$date)
+  gets_df[i,'Title'] <- c(decode$title)
+  gets_df[i,'nasaurl'] <- c(decode$url)
 }
-
-
-
 
 # Get info about the APOD twitter account
 apodtwitter <- lookup_users("apod")
 
 #Get apod timeline info (2000 tweets)
-apodtimeline <- get_timeline(user = 8295072, n = 2000)
+apodtimeline2 <- get_timeline(user = 8295072, n = 2000)
+twitterdata <- saveRDS(apodtimeline2, file = "apodtimeline.RDS")
+apoddata <- saveRDS(gets_df, file = "nasadata.RDS")
 
-# looper function
-loopedget <- function(date) {
-  GET(apod)
-} 
+gets_df['Explanation', 2]
 
-vesttest <- read_html("https://apod.nasa.gov/apod/astropix.html")
-test2 <- read_html("https://apod.nasa.gov/apod/ap190102.html")
-
-text <- vesttest %>% 
-  html_text()
-
-children <- vesttest %>% 
-  html_children()
+getsrawtext <- paste(gets_df$Explanation, collapse = "")
+apodtext <- DataframeSource(gets_df$Explanation)
+mergetest <- merge(apodtimeline, gets_df, by.x = apodtimeline$created_at, by.y = gets_df$Date)
