@@ -3,18 +3,21 @@ library(shinydashboard)
 library(ggplot2)
 library(leaflet)
 library(tidyverse)
+library(dplyr)
 library(tm)
 library(httr)
+library(wordcloud2)
+library(tidytext)
+twitterdata <- readRDS("apodtimeline.RDS")
+apoddata <- readRDS("nasadata.RDS")
 
-querydates <- seq(as.Date("2017/6/30"), as.Date("2017/12/31"), by = "day")
+text_by_date <- apoddata %>% 
+  unnest_tokens(output = word, input = 'Explanation', token = "words")
 
-apodbaseurl <- c("https://api.nasa.gov/planetary/apod?")
-apodkey <- c("&api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
-v <- GET("https://api.nasa.gov/planetary/apod?api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
-w <- curl(url = "https://api.nasa.gov/planetary/apod?api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
-s <- GET("https://api.nasa.gov/planetary/apod?date=2012-12-19&api_key=jyfIazj3xBfqar7uYKV0GVSOF2rmLyGihb5N540e")
+text_by_date <- text_by_date %>% 
+  anti_join(stop_words)
 
-for (i in querydates[1:20]) {
-  print(querydates[i])
-}
-  
+cloud_data <- text_by_date %>% 
+  count(word, sort = TRUE) %>% 
+  subset(cloud_data$n > 5)
+
