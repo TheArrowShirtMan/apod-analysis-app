@@ -8,16 +8,14 @@ library(tm)
 library(httr)
 library(wordcloud2)
 library(tidytext)
-twitterdata <- readRDS("apodtimeline.RDS")
-apoddata <- readRDS("nasadata.RDS")
+library(data.table)
 
-text_by_date <- apoddata %>% 
-  unnest_tokens(output = word, input = 'Explanation', token = "words")
+mergedata <- readRDS("apodtwittermerge.RDS")
 
-text_by_date <- text_by_date %>% 
-  anti_join(stop_words)
+cloud_data <- apoddata %>% 
+  unnest_tokens(output = word, input = 'Explanation', token = "words") %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE)
 
-cloud_data <- text_by_date %>% 
-  count(word, sort = TRUE) %>% 
-  subset(cloud_data$n > 5)
+
 
