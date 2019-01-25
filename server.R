@@ -1,20 +1,27 @@
 
 library(shiny)
 library(png)
+library(plotly)
 
 shinyServer(function(input, output) {
    
   output$cloud <- renderWordcloud2({
     wordcloud2(cloud_data, color = "random-dark",
-               backgroundColor = "grey",
                shuffle = FALSE,
                shape = "circle"
                )
   })
 
-  output$dt = renderDataTable({
-    mergedata[,c('Date', 'Title', 'favorite_count', 'retweet_count')] 
+  output$dt = renderDataTable(
+    expr = mergedata[,c('Date', 'Title', 'favorite_count', 'retweet_count', 'nasaurl')],
+    escape = FALSE
  
-})
+)
+  sent <- ggplot(sentiments, aes(word, sentiment)) +
+    geom_col() +
+    scale_y_continuous("", position = "top") +
+    labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
+    coord_flip()
+  output$sent <- renderPlotly(ggplotly(sent))
 })  
 
