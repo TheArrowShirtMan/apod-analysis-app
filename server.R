@@ -23,5 +23,6 @@ shinyServer(function(input, output) {
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
     coord_flip()
   output$sent <- renderPlotly(ggplotly(sent))
+  output$astropic <- '<body><img src="https://apod.nasa.gov/apod/image/1701/Comet45P_Hemmerich_960.jpg" alt="https://apod.nasa.gov/apod/image/1701/Comet45P_Hemmerich_960.jpg" class="shrinkToFit" width="626" height="553"></body>'
 })  
 

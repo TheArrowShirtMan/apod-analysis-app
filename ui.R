@@ -17,7 +17,8 @@ shinyUI(navbarPage(
       wordcloud2Output("cloud")
     ),
     mainPanel(
-      plotlyOutput("sent"),
+      htmlOutput("astropic"),
+      #plotlyOutput("sent"),
       dataTableOutput("dt")
     )
   )
