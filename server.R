@@ -28,15 +28,16 @@ shinyServer(function(input, output) {
 
   bottom10sent <- ggplot(tail(sentiments, 10), aes(word, sentiment)) +
     geom_col() +
+    scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) +
     scale_y_continuous("", position = "top") +
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "Bottom 10 Words Sentiment Analysis")
   
   sent <- ggplot(sentiments, aes(word, sentiment)) +
     geom_col() +
     scale_y_continuous("", position = "top") +
-    labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
+    labs(x = "", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
+    theme(axis.text.y = element_blank()) +
     coord_flip()
-  output$sent <- renderPlotly(ggplotly(sent))
   
   output$chosenplot <- renderPlotly(ggplotly(plottest()))
   #output$astropic <- '<body><img src="https://apod.nasa.gov/apod/image/1701/Comet45P_Hemmerich_960.jpg" alt="https://apod.nasa.gov/apod/image/1701/Comet45P_Hemmerich_960.jpg" class="shrinkToFit" width="626" height="553"></body>'
