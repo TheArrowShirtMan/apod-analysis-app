@@ -1,7 +1,6 @@
 library(shiny)
 library(shinyWidgets)
 library(shinydashboard)
-plotlist <- 
 # Define UI
 
   fluidPage(
@@ -22,7 +21,8 @@ plotlist <-
         tabsetPanel(
           tabPanel("Plots", plotlyOutput("chosenplot"),
                    selectInput("plotchoice", "Choose plot", 
-                               choices = c("Top 10 Sentiment Scores", "Bottom 10 Sentiment Scores", "Overall sentiment distribution")) 
+                               choices = c("Top 10 Sentiment Scores", "Bottom 10 Sentiment Scores", "Overall sentiment distribution"),
+                               selected = "Top 10 Sentiment Scores") 
                    ),
           tabPanel("Table", dataTableOutput("dt"))
         )

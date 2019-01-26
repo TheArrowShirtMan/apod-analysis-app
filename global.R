@@ -12,6 +12,7 @@ library(data.table)
 library(plotly)
 
 mergedata <- readRDS("./data/apodtwittermerge.RDS")
+apoddata <- readRDS("./data/apod.RDS")
 
 cloud_data <- apoddata %>% 
   unnest_tokens(output = word, input = 'Explanation', token = "words") %>% 
