@@ -9,8 +9,9 @@ library(httr)
 library(wordcloud2)
 library(tidytext)
 library(data.table)
+library(plotly)
 
-mergedata <- readRDS("apodtwittermerge.RDS")
+mergedata <- readRDS("./data/apodtwittermerge.RDS")
 
 cloud_data <- apoddata %>% 
   unnest_tokens(output = word, input = 'Explanation', token = "words") %>% 
