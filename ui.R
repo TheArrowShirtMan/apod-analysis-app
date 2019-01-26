@@ -1,10 +1,11 @@
 library(shiny)
 library(shinyWidgets)
 library(shinydashboard)
+plotlist <- 
 # Define UI
 
   fluidPage(
-  #setBackgroundColor("grey"),
+  setBackgroundColor("white"),
   # Application title
     titlePanel("The Astronomy picture of the day"),
   # Sidebar
@@ -19,9 +20,11 @@ library(shinydashboard)
       ),
       mainPanel(
         tabsetPanel(
-          tabPanel("Plot", plotlyOutput("sent")),
-          tabPanel("Table", dataTableOutput("dt")
-                   )
+          tabPanel("Plots", plotlyOutput("chosenplot"),
+                   selectInput("plotchoice", "Choose plot", 
+                               choices = c("Top 10 Sentiment Scores", "Bottom 10 Sentiment Scores", "Overall sentiment distribution")) 
+                   ),
+          tabPanel("Table", dataTableOutput("dt"))
         )
       )
     )
