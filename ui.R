@@ -6,13 +6,13 @@ library(shinydashboard)
   fluidPage(
   setBackgroundColor("white"),
   # Application title
-    titlePanel("The Astronomy picture of the day"),
+    titlePanel("The Astronomy Picture of the Day"),
   # Sidebar
     sidebarLayout(
       sidebarPanel(
         "The Astronomy Picture of the Day program was begun in 1995 and is currently the largest collection of annotated astronomical images on the internet.  It is one of the most popular federally-subsidized websites in America.",
         HTML("<br> </br>"),
-        "Click a title in the table below to see a preview of the image and click the url at the right to go to APOD's website and see the full description!",
+        "You can explore sentiment analysis of APOD explanations in the Plots tab and see stats for each image in the Table tab.",
         HTML("<br> </br>"),
         wordcloud2Output("cloud"),
         width = 4
