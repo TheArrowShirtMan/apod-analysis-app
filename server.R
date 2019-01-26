@@ -21,19 +21,21 @@ shinyServer(function(input, output) {
     escape = FALSE
  
 )
-  top10sent <- ggplot(sentiments[1:10,], aes(word, sentiment)) +
+  top10sent <- ggplot(sentiments[1:10,], aes(word, sentiment, fill = sentiment)) +
     geom_col() +
     scale_y_continuous("", position = "top") +
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "Top 10 words Sentiment Analysis")
 
-  bottom10sent <- ggplot(tail(sentiments, 10), aes(word, sentiment)) +
+  bottom10sent <- ggplot(tail(sentiments, 10), aes(word, sentiment, fill = sentiment)) +
     geom_col() +
+    theme(axis.text.x = element_text(angle = 45)) +
     scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9")) +
     scale_y_continuous("", position = "top") +
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "Bottom 10 Words Sentiment Analysis")
   
-  sent <- ggplot(sentiments, aes(word, sentiment)) +
+  sent <- ggplot(sentiments, aes(word, sentiment, fill = sentiment)) +
     geom_col() +
+    theme(axis.text.x = element_text(angle = 45)) +
     scale_y_continuous("", position = "top") +
     labs(x = "", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
     theme(axis.text.y = element_blank()) +

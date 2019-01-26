@@ -70,7 +70,7 @@ drops <- c("reply_to_screen_name", "display_text_width", "reply_to_status_id",
            "followers_count","friends_count","listed_count", "statuses_count", "account_created_at",
            "verified", "profile_url", "account_lang","profile_banner_url","profile_background_url",
            "profile_image_url")
-twitterdata <- twitterdata[ , !names(twitterdata) %in% drops]
+mergedata <- mergedata[ , !names(twitterdata) %in% drops]
 twitterdata$Date <- as.Date(twitterdata$created_at)
 
 
@@ -95,14 +95,47 @@ sentiments <- cloud_data %>%
 sentiments <- sentiments[order(sentiments$sentiment, decreasing = TRUE), ]
 sentiments$word <- factor(sentiments$word, levels = sentiments$word[order(sentiments$sentiment)])
 
-  #facet_wrap(~book, ncol = 2, scales = "free_x")  
-  
-  
-  
-  
-  
-  
-  
+  #facet_wrap(~book, ncol = 2, scales = "free_x")
+
+reactive()
+assign_spotify_play <- function(val) {
+  HTML(paste0(
+    '<a href="', nasaurl,'">
+    <span class="info-box-icon bg-black"><i class="fa fa-spotify"></i></span>
+    </a>'
+  ))
+}
+mergedata$nasahtml <- paste0('<a href="', mergedata$nasaurl, '">Click to see full image!</a>')
+
+testhtml <- 
+testhtml
+
+saveRDS(mergedata, "./data/apodtwittermerge.RDS")
+
+#########################
+sidebarPanel(
+  conditionalPanel(
+    'input.dataset === "diamonds"',
+    checkboxGroupInput("show_vars", "Columns in diamonds to show:",
+                       names(diamonds), selected = names(diamonds))
+  ),
+  conditionalPanel(
+    'input.dataset === "mtcars"',
+    helpText("Click the column header to sort a column.")
+  ),
+  conditionalPanel(
+    'input.dataset === "iris"',
+    helpText("Display 5 records by default.")
+  )
+)  
+names(mergedata)
+
+#################
+
+tabsetPanel(
+  id = 'dataset',
+  tabPanel("diamonds", DT::dataTableOutput("mytable1")),
+  tabPanel("mtcars", DT::dataTableOutput("mytable2")),
   
   
   
