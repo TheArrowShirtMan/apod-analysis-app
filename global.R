@@ -19,5 +19,14 @@ cloud_data <- apoddata %>%
   anti_join(stop_words) %>% 
   count(word, sort = TRUE)
 
+sentiments <- cloud_data %>%
+  filter(cloud_data$n > 5) %>% 
+  inner_join(get_sentiments("bing")) %>% 
+  #count(book, index = linenumber %/% 80, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
+sortiments <- sentiments[order(sentiments$sentiment, decreasing = TRUE),]
+
 
 

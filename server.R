@@ -21,22 +21,22 @@ shinyServer(function(input, output) {
     escape = FALSE
  
 )
-  top10sent <- ggplot(sentiments[1:10,], aes(word, sentiment, fill = sentiment)) +
+  top10sent <- ggplot(sortiments[1:10,], aes(word, sentiment, fill = sentiment)) +
     geom_col() +
     theme(axis.text.x = element_text(angle = 45)) +
-    scale_y_continuous("", position = "top") +
+    #scale_y_continuous("", position = "top") +
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "Top 10 words Sentiment Analysis")
 
-  bottom10sent <- ggplot(tail(sentiments, 10), aes(word, sentiment, fill = sentiment)) +
+  bottom10sent <- ggplot(tail(sortiments, 10), aes(word, sentiment, fill = sentiment)) +
     geom_col() +
     theme(axis.text.x = element_text(angle = 45)) +
-    scale_y_continuous("", position = "top") +
+    #scale_y_continuous("", position = "top") +
     labs(x = "Word in APOD Explanation", y = "Sentiment Score", title = "Bottom 10 Words Sentiment Analysis")
   
-  sent <- ggplot(sentiments, aes(word, sentiment, fill = sentiment)) +
+  sent <- ggplot(sortiments, aes(word, sentiment, fill = sentiment)) +
     geom_col() +
     theme(axis.text.x = element_text(angle = 45)) +
-    scale_y_continuous("", position = "top") +
+    #scale_y_continuous("", position = "top") +
     labs(x = "", y = "Sentiment Score", title = "2017 Sentiment Analysis") +
     theme(axis.text.y = element_blank()) +
     coord_flip()
